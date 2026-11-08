@@ -79,7 +79,9 @@ As a user, I want clear exit codes (0, 1, 2) and descriptive usage/error message
 - **FR-006**: System MUST validate each manifest against Rule R-005 (`minUI5Version`: present under `sap.ui5.dependencies.minUI5Version` as string matching `major.minor` or `major.minor.patch` with numeric parts).
 - **FR-007**: System MUST validate each manifest against Rule R-006 (`sap.app.i18n` present as non-empty string or object with non-empty `bundleUrl`).
 - **FR-008**: System MUST output in plain text by default, displaying a header line with the file path followed by one line per rule in ID order (`PASS R-00X` or `FAIL R-00X: <message>`), producing identical output for identical inputs.
-- **FR-009**: System MUST support an optional `--json` flag to output a single JSON object with `files` array and `summary` object.
+- **FR-009**: System MUST support an optional `--json` flag to output a single JSON object with `files` array and `summary` object.  JSON summary keys are exactly: `filesChecked`, `passed`, `failed` (integers). Each entry in
+  `files` has `path`, `status` ("PASS" or "FAIL") and `results` (six entries, each with `id`,
+  `status` and `message`).
 - **FR-010**: System MUST enforce exit codes: `0` for all files passing all rules; `1` for rule violations without usage errors; `2` for usage errors (no file arguments, unknown flag, file not found/unreadable, invalid JSON), where exit 2 takes precedence over 1 when both occur.
 - **FR-011**: System MUST operate under constraints: no network access, no modification of input files, no auto-fix, and no full JSON-schema validation.
 - **FR-012**: R-004 also FAILS when a model has a `dataSource` property but `sap.app.dataSources`
