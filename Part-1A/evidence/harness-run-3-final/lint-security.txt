@@ -1,0 +1,7 @@
+PASS
+command: npx eslint -c .harness/eslint.config.js --max-warnings 0 src tests
+
+--- stdout ---
+
+--- stderr ---
+
