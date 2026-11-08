@@ -10,7 +10,7 @@ export function validateR001(manifest) {
   if (segments.length < 2 || !segments.every((s) => /^[a-zA-Z][a-zA-Z0-9]*$/.test(s))) {
     return { id: 'R-001', status: 'FAIL', message: 'sap.app.id is invalid' };
   }
-  return { id: 'R-001', status: 'PASS' };
+  return { id: 'R-001', status: 'PASS', message: '' };
 }
 
 export function validateR002(manifest) {
@@ -25,7 +25,7 @@ export function validateR002(manifest) {
   if (!validTypes.includes(type)) {
     return { id: 'R-002', status: 'FAIL', message: `sap.app.type must be one of ${validTypes.join(', ')}` };
   }
-  return { id: 'R-002', status: 'PASS' };
+  return { id: 'R-002', status: 'PASS', message: '' };
 }
 
 export function validateR003(manifest) {
@@ -37,14 +37,14 @@ export function validateR003(manifest) {
     if (rootView.trim().length === 0) {
       return { id: 'R-003', status: 'FAIL', message: 'sap.ui5.rootView string cannot be empty' };
     }
-    return { id: 'R-003', status: 'PASS' };
+    return { id: 'R-003', status: 'PASS', message: '' };
   }
   if (typeof rootView === 'object' && !Array.isArray(rootView)) {
     const viewName = rootView.viewName;
     if (typeof viewName !== 'string' || viewName.trim().length === 0) {
       return { id: 'R-003', status: 'FAIL', message: 'sap.ui5.rootView object viewName must be a non-empty string' };
     }
-    return { id: 'R-003', status: 'PASS' };
+    return { id: 'R-003', status: 'PASS', message: '' };
   }
   return { id: 'R-003', status: 'FAIL', message: `sap.ui5.rootView has wrong type: ${typeof rootView}` };
 }
@@ -52,7 +52,7 @@ export function validateR003(manifest) {
 export function validateR004(manifest) {
   const models = manifest?.['sap.ui5']?.models;
   if (models === undefined || models === null) {
-    return { id: 'R-004', status: 'PASS' };
+    return { id: 'R-004', status: 'PASS', message: '' };
   }
   if (typeof models !== 'object' || Array.isArray(models)) {
     return { id: 'R-004', status: 'FAIL', message: 'sap.ui5.models must be an object' };
@@ -84,7 +84,7 @@ export function validateR004(manifest) {
     };
   }
 
-  return { id: 'R-004', status: 'PASS' };
+  return { id: 'R-004', status: 'PASS', message: '' };
 }
 
 export function validateR005(manifest) {
@@ -95,11 +95,22 @@ export function validateR005(manifest) {
   if (typeof version !== 'string') {
     return { id: 'R-005', status: 'FAIL', message: `minUI5Version has wrong type: ${typeof version}` };
   }
-  const versionRegex = /^\d+\.\d+(?:\.\d+)?$/;
-  if (!versionRegex.test(version)) {
+  const parts = version.split('.');
+  if (parts.length !== 2 && parts.length !== 3) {
     return { id: 'R-005', status: 'FAIL', message: 'minUI5Version is invalid' };
   }
-  return { id: 'R-005', status: 'PASS' };
+  for (const part of parts) {
+    if (part.length === 0) {
+      return { id: 'R-005', status: 'FAIL', message: 'minUI5Version is invalid' };
+    }
+    for (let i = 0; i < part.length; i++) {
+      const code = part.charCodeAt(i);
+      if (code < 48 || code > 57) {
+        return { id: 'R-005', status: 'FAIL', message: 'minUI5Version is invalid' };
+      }
+    }
+  }
+  return { id: 'R-005', status: 'PASS', message: '' };
 }
 
 export function validateR006(manifest) {
@@ -111,14 +122,14 @@ export function validateR006(manifest) {
     if (i18n.trim().length === 0) {
       return { id: 'R-006', status: 'FAIL', message: 'sap.app.i18n string cannot be empty' };
     }
-    return { id: 'R-006', status: 'PASS' };
+    return { id: 'R-006', status: 'PASS', message: '' };
   }
   if (typeof i18n === 'object' && !Array.isArray(i18n)) {
     const bundleUrl = i18n.bundleUrl;
     if (typeof bundleUrl !== 'string' || bundleUrl.trim().length === 0) {
       return { id: 'R-006', status: 'FAIL', message: 'sap.app.i18n object bundleUrl must be a non-empty string' };
     }
-    return { id: 'R-006', status: 'PASS' };
+    return { id: 'R-006', status: 'PASS', message: '' };
   }
   return { id: 'R-006', status: 'FAIL', message: `sap.app.i18n has wrong type: ${typeof i18n}` };
 }
