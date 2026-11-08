@@ -1,0 +1,18 @@
+FAIL
+command: npx eslint -c .harness/eslint.config.js --max-warnings 0 src tests
+
+--- stdout ---
+
+/workspaces/Assignment-1/Part-1A/src/rules.js
+  98:24  warning  Unsafe Regular Expression  security/detect-unsafe-regex
+
+/workspaces/Assignment-1/Part-1A/src/validator.js
+   7:19  warning  Found statSync from package "node:fs" with non literal argument at index 0      security/detect-non-literal-fs-filename
+  24:15  warning  Found readFileSync from package "node:fs" with non literal argument at index 0  security/detect-non-literal-fs-filename
+
+✖ 3 problems (0 errors, 3 warnings)
+
+
+--- stderr ---
+ESLint found too many warnings (maximum: 0).
+
