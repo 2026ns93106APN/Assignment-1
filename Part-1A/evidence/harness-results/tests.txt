@@ -2,28 +2,28 @@ PASS
 command: node --test tests/**/*.test.js
 
 --- stdout ---
-✔ T005: Rule R-001 validation (sap.app.id) (42.902803ms)
-✔ T006: Rule R-002 validation (sap.app.type) (41.144991ms)
-✔ T007: Rule R-003 validation (sap.ui5.rootView) (44.701638ms)
-✔ T008: Rule R-004 validation (sap.ui5.models dataSources) (36.537481ms)
-✔ T009: Rule R-005 validation (minUI5Version) (35.780609ms)
-✔ T010: Rule R-006 validation (sap.app.i18n) (40.354086ms)
-✔ T011: FR-001 through FR-008 batch file processing and plain-text output format (43.324339ms)
-✔ T012: FR-009 JSON output format (81.06947ms)
-✔ T013: FR-010 Exit codes and usage errors (152.415394ms)
-✔ T014: Duplicate path handling (52.47245ms)
-✔ T015: 50-file performance check (< 2 seconds) (38.93027ms)
-✔ T013a-1 FR-012: R-004 fails when sap.app.dataSources is missing and names the model (35.064965ms)
-✔ T013a-2 FR-013: wrong-typed values fail R-001, R-002, R-003, R-005, R-006 (53.332683ms)
-✔ R-002 fails for a value outside application/component/library (51.328705ms)
-✔ R-005 fails for a non-numeric version (36.400748ms)
-✔ FR-010: invalid JSON and empty file are usage errors (exit 2) (71.770448ms)
-✔ FR-010: unknown flag is a usage error (42.654637ms)
-✔ FR-010: exit 2 wins over 1 and every file is still reported (38.899476ms)
-✔ FR-008: identical input gives identical, non-empty output (78.460527ms)
-✔ FR-008: rules are listed in ID order (39.278312ms)
-✔ FR-009: JSON file entries carry path, status and six results (53.374862ms)
-✔ T013b FR-011: inputs are unchanged and source uses no network modules (53.829978ms)
+✔ T005: Rule R-001 validation (sap.app.id) (38.391457ms)
+✔ T006: Rule R-002 validation (sap.app.type) (44.925925ms)
+✔ T007: Rule R-003 validation (sap.ui5.rootView) (58.38784ms)
+✔ T008: Rule R-004 validation (sap.ui5.models dataSources) (59.763095ms)
+✔ T009: Rule R-005 validation (minUI5Version) (42.484073ms)
+✔ T010: Rule R-006 validation (sap.app.i18n) (36.846304ms)
+✔ T011: FR-001 through FR-008 batch file processing and plain-text output format (39.977167ms)
+✔ T012: FR-009 JSON output format (36.276742ms)
+✔ T013: FR-010 Exit codes and usage errors (69.21391ms)
+✔ T014: Duplicate path handling (37.485018ms)
+✔ T015: 50-file performance check (< 2 seconds) (52.598395ms)
+✔ T013a-1 FR-012: R-004 fails when sap.app.dataSources is missing and names the model (34.535394ms)
+✔ T013a-2 FR-013: wrong-typed values fail R-001, R-002, R-003, R-005, R-006 (36.040015ms)
+✔ R-002 fails for a value outside application/component/library (35.51848ms)
+✔ R-005 fails for a non-numeric version (38.333057ms)
+✔ FR-010: invalid JSON and empty file are usage errors (exit 2) (72.95553ms)
+✔ FR-010: unknown flag is a usage error (34.780131ms)
+✔ FR-010: exit 2 wins over 1 and every file is still reported (38.308864ms)
+✔ FR-008: identical input gives identical, non-empty output (78.20033ms)
+✔ FR-008: rules are listed in ID order (35.851744ms)
+✔ FR-009: JSON file entries carry path, status and six results (38.379025ms)
+✔ T013b FR-011: inputs are unchanged and source uses no network modules (35.756201ms)
 ℹ tests 22
 ℹ suites 0
 ℹ pass 22
@@ -31,7 +31,7 @@ command: node --test tests/**/*.test.js
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 1268.114891
+ℹ duration_ms 1093.777298
 
 --- stderr ---
 
