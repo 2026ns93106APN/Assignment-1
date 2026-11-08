@@ -1,0 +1,13 @@
+{
+  "sap.app": {
+    "id": "my.app.demo",
+    "type": "application",
+    "i18n": "i18n/i18n.properties"
+  },
+  "sap.ui5": {
+    "rootView": "my.app.view.App",
+    "dependencies": {
+      "minUI5Version": "invalid-version"
+    }
+  }
+}

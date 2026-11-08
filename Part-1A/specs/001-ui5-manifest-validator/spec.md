@@ -82,6 +82,11 @@ As a user, I want clear exit codes (0, 1, 2) and descriptive usage/error message
 - **FR-009**: System MUST support an optional `--json` flag to output a single JSON object with `files` array and `summary` object.
 - **FR-010**: System MUST enforce exit codes: `0` for all files passing all rules; `1` for rule violations without usage errors; `2` for usage errors (no file arguments, unknown flag, file not found/unreadable, invalid JSON), where exit 2 takes precedence over 1 when both occur.
 - **FR-011**: System MUST operate under constraints: no network access, no modification of input files, no auto-fix, and no full JSON-schema validation.
+- **FR-012**: R-004 also FAILS when a model has a `dataSource` property but `sap.app.dataSources`
+  is missing or is not an object. The failure message names the offending model.
+- **FR-013**: R-001, R-002, R-003, R-005 and R-006 FAIL when the checked key exists but has the
+  wrong type (for example, a number instead of a string). The failure message names the key and
+  its actual type.
 
 ### Key Entities
 

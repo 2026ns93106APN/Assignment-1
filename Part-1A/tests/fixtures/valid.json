@@ -1,0 +1,25 @@
+{
+  "sap.app": {
+    "id": "my.app.demo",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "dataSources": {
+      "mainService": {
+        "uri": "/sap/opu/odata/I2DM/PURCHASEREQ_SRV/"
+      }
+    }
+  },
+  "sap.ui5": {
+    "rootView": {
+      "viewName": "my.app.view.App"
+    },
+    "models": {
+      "": {
+        "dataSource": "mainService"
+      }
+    },
+    "dependencies": {
+      "minUI5Version": "1.120.0"
+    }
+  }
+}

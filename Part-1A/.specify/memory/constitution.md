@@ -59,7 +59,8 @@ all times to prevent vulnerabilities in software supply chains and enterprise to
 
 ### IV. Inviolable Test Harness & Agent Boundaries
 The integrity of the verification system is absolute:
-- The coding agent MUST NOT edit, move, or modify files under `tests/` or `.harness/`.
+- After the freeze checkpoint (T016a), the coding agent MUST NOT edit, move, or modify files
+  under `tests/` or `.harness/`.
 - The coding agent MUST NOT delete, comment out, or weaken existing tests.
 - The coding agent MUST NOT disable or weaken lint or security configurations.
 - The coding agent MUST NOT expose secrets in code, logs, or evidence artifacts.
@@ -87,13 +88,22 @@ quality gates:
   socket activity or HTTP requests.
 - **Exit Code Verification**: Test suites must verify compliance with exit code semantics (0 for
   valid manifests, 1 for rule violations, 2 for usage errors).
+- **Secret Scan Gate**: A secret-detection script in `.harness/` must scan all repository files
+  and report 0 findings.
+- **Harness Runner**: A single command (`npm run harness`) runs every gate and saves results to
+  `evidence/`. After the automated result, the human author records an ACCEPT or REJECT
+  decision in `evidence/harness-log.md`.
 
 ## Coding Agent Guardrails & Artifact Management
 
 Automated coding agents operating within this repository are constrained by the following non-negotiable
 rules:
-- **Protected Paths**: `tests/`, `.harness/`, and `evidence/initial-generation/` are read-only to
-  coding agents. Any modification attempts must result in immediate rejection.
+- **Protected Paths**: `tests/`, `.harness/` (including lint and security configuration) and
+  `evidence/initial-generation/` may be drafted by the coding agent during the setup and
+  test-writing phases (tasks T001-T016), but only under human review. At the freeze checkpoint
+  (T016a) the human author approves them and they become read-only to coding agents.
+  `evidence/initial-generation/` is write-once. Any agent modification after the freeze must
+  result in immediate rejection.
 - **Spec Kit Lifecycle**: All functional requirements, architectural designs, and implementation
   tasks MUST be tracked in `.specify/` artifacts. Requirements must never be added, modified, or
   retired without updating Spec Kit documents and recording the change history.
@@ -105,9 +115,9 @@ rules:
 This Constitution is the foundational governing document for `ui5-manifest-validator` and supersedes
 all conflicting conventions, instructions, or local development practices.
 
-- **Amendment Procedure**: Amendments to this constitution require a formal proposal documenting
-  the rationale, impact analysis, and consensus review. No principle may be removed or weakened
-  without explicit stakeholder approval.
+- **Amendment Procedure**: Amendments require a written entry in the Change History stating the
+  rationale and impact, and explicit approval by the human author. No principle may be removed
+  or weakened without that approval.
 - **Versioning Policy**: The constitution strictly adheres to semantic versioning:
   - **MAJOR**: Incompatible governance shifts, principle removals, or fundamental rule alterations.
   - **MINOR**: Addition of new principles, sections, or materially expanded governance rules.
@@ -115,4 +125,10 @@ all conflicting conventions, instructions, or local development practices.
 - **Compliance Review**: All pull requests, code reviews, and automated agent activities must verify
   strict adherence to these principles. Non-compliant contributions MUST be rejected.
 
-**Version**: 1.0.0 | **Ratified**: 2026-11-08 | **Last Amended**: 2026-11-08
+## Change History
+- 1.0.0 (2026-11-08): Initial ratification.
+- 1.1.0 (2026-11-08): Clarified protected-path ownership, added secret-scan gate and harness
+  runner, replaced team governance with author approval.
+- 1.1.1 (2026-11-08): Clarified the freeze point
+
+**Version**: 1.1.1 | **Ratified**: 2026-11-08 | **Last Amended**: 2026-11-08

@@ -1,0 +1,1 @@
+{"sap.app":{"id":"my.app.demo","type":"application","i18n":"i18n/i18n.properties"},"sap.ui5":{"rootView":"my.app.demo.view.App","dependencies":{"minUI5Version":"1.x"}}}

@@ -1,0 +1,15 @@
+{
+  "name": "ui5-manifest-validator",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/**/*.test.js",
+    "lint": "eslint .",
+    "harness": "node .harness/run-harness.js"
+  },
+  "devDependencies": {
+    "eslint": "^9.0.0",
+    "eslint-plugin-security": "^3.0.0"
+  }
+}
