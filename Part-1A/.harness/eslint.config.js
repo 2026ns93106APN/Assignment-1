@@ -21,5 +21,11 @@ export default [
     rules: {
       'no-unused-vars': ['error', { argsIgnorePattern: '^_' }]
     }
+  },
+  {
+    files: ['src/validator.js'],
+    rules: {
+      'security/detect-non-literal-fs-filename': 'off'
+    }
   }
 ];

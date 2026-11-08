@@ -24,7 +24,16 @@ A human reviews the results and records ACCEPT in the harness log.
 **Evidence:** The pre-implementation test results, lint and security results, and secret scan results.
 
 ## Entry 2: Initial generation (Stage 2)
-Not completed yet; the initial implementation has not been generated and preserved.
+**What we ask the agent to do**. Tests and the harness are frozen. The agent’s job is only to write the three source files, rules.js, validator.js and cli.js, so that the already-written tests can pass. It isn’t allowed to change tests, the harness, package.json or the specs.
+**What the agent reads.** Spec Kit makes it read the project documents:
+the constitution (the rules, like no network access and no disabling lint),
+the spec (the six rules and exit codes),
+the plan (Node.js, the file layout),
+the tasks (T017 to T019, the exact jobs for this step).
+Our prompt also named the spec, plan and constitution directly and limited it to those tasks. Check in Gemini’s output which files it actually read.
+**Why we snapshot before any check.** we wanted the agent’s first attempt preserved before any fixing. So right after it finishes, you copy the code into evidence/initial-generation/ and tag it first-generation. Only then do you run the harness. That lets a reader compare the first attempt against the final one.
+
+The first cp failed because the folder was missing, that the tag still captured the code, and that you made the copy afterwards.
 
 ## Entry 3: Harness run 1 → result
 The currently saved harness results show a failure, not a passing run:

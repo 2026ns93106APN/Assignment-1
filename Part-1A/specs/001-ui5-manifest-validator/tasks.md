@@ -47,7 +47,7 @@ description: "Task list for UI5 Manifest Validator implementation"
 - [X] T014 [P] [US1] Write failing test for duplicate-path handling in `tests/validator.test.js`
 - [X] T015 [P] [US1] Write failing test for 50-file performance check (completing under 2 seconds) in `tests/validator.test.js`
 - [X] T016 Run initial test suite to verify that all written tests fail as required
-- [ ] T016a HUMAN: review `tests/` and `.harness/` against the spec, save the failing test run to `evidence/`, then freeze both folders. The agent may not edit them from here on (constitution IV)
+- [X] T016a HUMAN: review `tests/` and `.harness/` against the spec, save the failing test run to `evidence/`, then freeze both folders. The agent may not edit them from here on (constitution IV)
 
 ---
 

@@ -19,8 +19,8 @@ function scanDir(dir) {
   for (const entry of entries) {
     const fullPath = path.join(dir, entry.name);
     if (entry.isDirectory()) {
-            if (['node_modules', '.git'].includes(entry.name)) continue;
-      violations += scanDir(fullPath);
+     if (['node_modules', '.git'].includes(entry.name)) continue;
+     violations += scanDir(fullPath);
     } else if (entry.isFile()) {
       if (entry.name === 'secret-scan.js') continue;
       const content = fs.readFileSync(fullPath, 'utf8');
