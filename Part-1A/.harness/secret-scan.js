@@ -7,7 +7,10 @@ const SECRET_PATTERNS = [
   /secret['"]?\s*[:=]\s*['"][^'"]+['"]/i,
   /bearer\s+[a-zA-Z0-9_\-\.]{20,}/i,
   /ghp_[a-zA-Z0-9]{36}/,
-  /sk_live_[0-9a-zA-Z]{24}/
+  /sk_live_[0-9a-zA-Z]{24}/,
+  /AIza[0-9A-Za-z_-]{35}/,
+  /\bsk-[A-Za-z0-9]{32,}/,
+  /-----BEGIN [A-Z ]*PRIVATE KEY-----/
 ];
 
 function scanDir(dir) {

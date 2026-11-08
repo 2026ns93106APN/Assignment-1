@@ -2,28 +2,28 @@ FAIL
 command: node --test tests/**/*.test.js
 
 --- stdout ---
-✖ T005: Rule R-001 validation (sap.app.id) (91.172772ms)
-✖ T006: Rule R-002 validation (sap.app.type) (124.966617ms)
-✖ T007: Rule R-003 validation (sap.ui5.rootView) (174.853603ms)
-✖ T008: Rule R-004 validation (sap.ui5.models dataSources) (175.406634ms)
-✖ T009: Rule R-005 validation (minUI5Version) (186.64306ms)
-✖ T010: Rule R-006 validation (sap.app.i18n) (268.154835ms)
-✖ T011: FR-001 through FR-008 batch file processing and plain-text output format (557.782846ms)
-✖ T012: FR-009 JSON output format (174.635775ms)
-✖ T013: FR-010 Exit codes and usage errors (68.482536ms)
-✖ T014: Duplicate path handling (59.668178ms)
-✖ T015: 50-file performance check (< 2 seconds) (108.217009ms)
-✖ T013a-1 FR-012: R-004 fails when sap.app.dataSources is missing and names the model (115.327301ms)
-✖ T013a-2 FR-013: wrong-typed values fail R-001, R-002, R-003, R-005, R-006 (351.025652ms)
-✖ R-002 fails for a value outside application/component/library (185.378103ms)
-✖ R-005 fails for a non-numeric version (80.335129ms)
-✖ FR-010: invalid JSON and empty file are usage errors (exit 2) (198.353299ms)
-✖ FR-010: unknown flag is a usage error (86.332336ms)
-✖ FR-010: exit 2 wins over 1 and every file is still reported (202.00039ms)
-✖ FR-008: identical input gives identical, non-empty output (212.271125ms)
-✖ FR-008: rules are listed in ID order (85.78272ms)
-✖ FR-009: JSON file entries carry path, status and six results (76.590527ms)
-✖ T013b FR-011: inputs are unchanged and source uses no network modules (270.512494ms)
+✖ T005: Rule R-001 validation (sap.app.id) (64.75397ms)
+✖ T006: Rule R-002 validation (sap.app.type) (47.654724ms)
+✖ T007: Rule R-003 validation (sap.ui5.rootView) (59.881269ms)
+✖ T008: Rule R-004 validation (sap.ui5.models dataSources) (48.047507ms)
+✖ T009: Rule R-005 validation (minUI5Version) (50.995805ms)
+✖ T010: Rule R-006 validation (sap.app.i18n) (54.650931ms)
+✖ T011: FR-001 through FR-008 batch file processing and plain-text output format (51.745403ms)
+✖ T012: FR-009 JSON output format (48.014375ms)
+✖ T013: FR-010 Exit codes and usage errors (84.801898ms)
+✖ T014: Duplicate path handling (90.212594ms)
+✖ T015: 50-file performance check (< 2 seconds) (76.570119ms)
+✖ T013a-1 FR-012: R-004 fails when sap.app.dataSources is missing and names the model (102.869597ms)
+✖ T013a-2 FR-013: wrong-typed values fail R-001, R-002, R-003, R-005, R-006 (52.456757ms)
+✖ R-002 fails for a value outside application/component/library (47.502129ms)
+✖ R-005 fails for a non-numeric version (54.101095ms)
+✖ FR-010: invalid JSON and empty file are usage errors (exit 2) (51.221415ms)
+✖ FR-010: unknown flag is a usage error (47.832395ms)
+✖ FR-010: exit 2 wins over 1 and every file is still reported (56.78423ms)
+✖ FR-008: identical input gives identical, non-empty output (156.870799ms)
+✖ FR-008: rules are listed in ID order (63.059152ms)
+✖ FR-009: JSON file entries carry path, status and six results (55.568282ms)
+✖ T013b FR-011: inputs are unchanged and source uses no network modules (54.675577ms)
 ℹ tests 22
 ℹ suites 0
 ℹ pass 0
@@ -31,12 +31,12 @@ command: node --test tests/**/*.test.js
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 4182.75003
+ℹ duration_ms 1641.639315
 
 ✖ failing tests:
 
 test at tests/validator.test.js:10:1
-✖ T005: Rule R-001 validation (sap.app.id) (91.172772ms)
+✖ T005: Rule R-001 validation (sap.app.id) (64.75397ms)
   AssertionError [ERR_ASSERTION]: The input did not match the regular expression /FAIL R-001/. Input:
   
   ''
@@ -55,7 +55,7 @@ test at tests/validator.test.js:10:1
   }
 
 test at tests/validator.test.js:16:1
-✖ T006: Rule R-002 validation (sap.app.type) (124.966617ms)
+✖ T006: Rule R-002 validation (sap.app.type) (47.654724ms)
   AssertionError [ERR_ASSERTION]: The input did not match the regular expression /FAIL R-002/. Input:
   
   ''
@@ -76,7 +76,7 @@ test at tests/validator.test.js:16:1
   }
 
 test at tests/validator.test.js:22:1
-✖ T007: Rule R-003 validation (sap.ui5.rootView) (174.853603ms)
+✖ T007: Rule R-003 validation (sap.ui5.rootView) (59.881269ms)
   AssertionError [ERR_ASSERTION]: The input did not match the regular expression /FAIL R-003/. Input:
   
   ''
@@ -97,7 +97,7 @@ test at tests/validator.test.js:22:1
   }
 
 test at tests/validator.test.js:28:1
-✖ T008: Rule R-004 validation (sap.ui5.models dataSources) (175.406634ms)
+✖ T008: Rule R-004 validation (sap.ui5.models dataSources) (48.047507ms)
   AssertionError [ERR_ASSERTION]: The input did not match the regular expression /FAIL R-004/. Input:
   
   ''
@@ -118,7 +118,7 @@ test at tests/validator.test.js:28:1
   }
 
 test at tests/validator.test.js:34:1
-✖ T009: Rule R-005 validation (minUI5Version) (186.64306ms)
+✖ T009: Rule R-005 validation (minUI5Version) (50.995805ms)
   AssertionError [ERR_ASSERTION]: The input did not match the regular expression /FAIL R-005/. Input:
   
   ''
@@ -139,7 +139,7 @@ test at tests/validator.test.js:34:1
   }
 
 test at tests/validator.test.js:40:1
-✖ T010: Rule R-006 validation (sap.app.i18n) (268.154835ms)
+✖ T010: Rule R-006 validation (sap.app.i18n) (54.650931ms)
   AssertionError [ERR_ASSERTION]: The input did not match the regular expression /FAIL R-006/. Input:
   
   ''
@@ -160,7 +160,7 @@ test at tests/validator.test.js:40:1
   }
 
 test at tests/validator.test.js:46:1
-✖ T011: FR-001 through FR-008 batch file processing and plain-text output format (557.782846ms)
+✖ T011: FR-001 through FR-008 batch file processing and plain-text output format (51.745403ms)
   AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
   
   1 !== 0
@@ -181,7 +181,7 @@ test at tests/validator.test.js:46:1
   }
 
 test at tests/validator.test.js:58:1
-✖ T012: FR-009 JSON output format (174.635775ms)
+✖ T012: FR-009 JSON output format (48.014375ms)
   AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
   
   1 !== 0
@@ -202,7 +202,7 @@ test at tests/validator.test.js:58:1
   }
 
 test at tests/validator.test.js:69:1
-✖ T013: FR-010 Exit codes and usage errors (68.482536ms)
+✖ T013: FR-010 Exit codes and usage errors (84.801898ms)
   AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
   
   1 !== 2
@@ -223,7 +223,7 @@ test at tests/validator.test.js:69:1
   }
 
 test at tests/validator.test.js:79:1
-✖ T014: Duplicate path handling (59.668178ms)
+✖ T014: Duplicate path handling (90.212594ms)
   AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
   
   1 !== 0
@@ -244,7 +244,7 @@ test at tests/validator.test.js:79:1
   }
 
 test at tests/validator.test.js:86:1
-✖ T015: 50-file performance check (< 2 seconds) (108.217009ms)
+✖ T015: 50-file performance check (< 2 seconds) (76.570119ms)
   AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
   
   1 !== 0
@@ -265,7 +265,7 @@ test at tests/validator.test.js:86:1
   }
 
 test at tests/validator.test.js:97:1
-✖ T013a-1 FR-012: R-004 fails when sap.app.dataSources is missing and names the model (115.327301ms)
+✖ T013a-1 FR-012: R-004 fails when sap.app.dataSources is missing and names the model (102.869597ms)
   AssertionError [ERR_ASSERTION]: The input did not match the regular expression /FAIL R-004:.*orders/. Input:
   
   ''
@@ -286,7 +286,7 @@ test at tests/validator.test.js:97:1
   }
 
 test at tests/validator.test.js:103:1
-✖ T013a-2 FR-013: wrong-typed values fail R-001, R-002, R-003, R-005, R-006 (351.025652ms)
+✖ T013a-2 FR-013: wrong-typed values fail R-001, R-002, R-003, R-005, R-006 (52.456757ms)
   AssertionError [ERR_ASSERTION]: R-001 should FAIL
       at TestContext.<anonymous> (file:///workspaces/Assignment-1/Part-1A/tests/validator.test.js:107:12)
       at Test.runInAsyncScope (node:async_hooks:227:14)
@@ -304,7 +304,7 @@ test at tests/validator.test.js:103:1
   }
 
 test at tests/validator.test.js:112:1
-✖ R-002 fails for a value outside application/component/library (185.378103ms)
+✖ R-002 fails for a value outside application/component/library (47.502129ms)
   AssertionError [ERR_ASSERTION]: The input did not match the regular expression /FAIL R-002/. Input:
   
   ''
@@ -325,7 +325,7 @@ test at tests/validator.test.js:112:1
   }
 
 test at tests/validator.test.js:119:1
-✖ R-005 fails for a non-numeric version (80.335129ms)
+✖ R-005 fails for a non-numeric version (54.101095ms)
   AssertionError [ERR_ASSERTION]: The input did not match the regular expression /FAIL R-005/. Input:
   
   ''
@@ -346,7 +346,7 @@ test at tests/validator.test.js:119:1
   }
 
 test at tests/validator.test.js:125:1
-✖ FR-010: invalid JSON and empty file are usage errors (exit 2) (198.353299ms)
+✖ FR-010: invalid JSON and empty file are usage errors (exit 2) (51.221415ms)
   AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
   
   1 !== 2
@@ -367,7 +367,7 @@ test at tests/validator.test.js:125:1
   }
 
 test at tests/validator.test.js:130:1
-✖ FR-010: unknown flag is a usage error (86.332336ms)
+✖ FR-010: unknown flag is a usage error (47.832395ms)
   AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
   
   1 !== 2
@@ -388,7 +388,7 @@ test at tests/validator.test.js:130:1
   }
 
 test at tests/validator.test.js:134:1
-✖ FR-010: exit 2 wins over 1 and every file is still reported (202.00039ms)
+✖ FR-010: exit 2 wins over 1 and every file is still reported (56.78423ms)
   AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
   
   1 !== 2
@@ -409,7 +409,7 @@ test at tests/validator.test.js:134:1
   }
 
 test at tests/validator.test.js:141:1
-✖ FR-008: identical input gives identical, non-empty output (212.271125ms)
+✖ FR-008: identical input gives identical, non-empty output (156.870799ms)
   AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
   
     assert.ok(a.stdout.length > 0)
@@ -430,7 +430,7 @@ test at tests/validator.test.js:141:1
   }
 
 test at tests/validator.test.js:148:1
-✖ FR-008: rules are listed in ID order (85.78272ms)
+✖ FR-008: rules are listed in ID order (63.059152ms)
   AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
   
     assert.ok(pos.every((p) => p >= 0))
@@ -451,7 +451,7 @@ test at tests/validator.test.js:148:1
   }
 
 test at tests/validator.test.js:155:1
-✖ FR-009: JSON file entries carry path, status and six results (76.590527ms)
+✖ FR-009: JSON file entries carry path, status and six results (55.568282ms)
   SyntaxError [Error]: Unexpected end of JSON input
       at JSON.parse (<anonymous>)
       at TestContext.<anonymous> (file:///workspaces/Assignment-1/Part-1A/tests/validator.test.js:156:18)
@@ -463,7 +463,7 @@ test at tests/validator.test.js:155:1
       at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
 
 test at tests/validator.test.js:167:1
-✖ T013b FR-011: inputs are unchanged and source uses no network modules (270.512494ms)
+✖ T013b FR-011: inputs are unchanged and source uses no network modules (54.675577ms)
   AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
   
   1 !== 0
