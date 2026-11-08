@@ -46,7 +46,7 @@ function main() {
           results: report.results.map((r) => ({
             id: r.id,
             status: r.status,
-            ...(r.message ? { message: r.message } : {}),
+            message: r.message,
           })),
         };
       }),
