@@ -1,0 +1,4 @@
+ Part-1A/.harness/eslint.config.js | 6 ++++++
+ Part-1A/.harness/secret-scan.js   | 4 ++--
+ 2 files changed, 8 insertions(+), 2 deletions(-)
+empty means unchanged
