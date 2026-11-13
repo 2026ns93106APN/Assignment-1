@@ -58,7 +58,7 @@ description: "Task list for UI5 Code Review Assistant implementation and evaluat
 
 **Purpose**: Human review and immutability lock before implementation begins
 
-- [ ] T011 [HUMAN] Review `tests/`, `.harness/`, `evals/dataset.json`, and `prompts/` against the spec, then freeze them (tag the commit) before implementation begins; the agent must not edit these afterwards
+- [X] T011 [HUMAN] Review `tests/`, `.harness/`, `evals/dataset.json`, and `prompts/` against the spec, then freeze them (tag the commit) before implementation begins; the agent must not edit these afterwards
 
 ---
 
