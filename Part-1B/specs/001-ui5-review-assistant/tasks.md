@@ -48,6 +48,8 @@ description: "Task list for UI5 Code Review Assistant implementation and evaluat
 - [ ] T007 [P] [US1] Write failing property tests for verbatim-evidence and valid-line-number rules (FR-007) in `tests/property/verbatim.test.js` against stored fixtures
 - [ ] T008 [P] [US1] Write failing property tests for category exclusions (FR-008) in `tests/property/exclusions.test.js` against stored fixtures
 - [ ] T009 [P] [US1] Write failing property tests for ground-truth matching with ±2 line tolerance and single-match rule (FR-009) in `tests/property/matching.test.js` against stored fixtures
+- [ ] T009a [P] [US1] Write a failing structural test asserting `evals/dataset.json` has exactly 18 cases in the FR-013 distribution (4 positive-hardcoded-text, 4 positive-missing-error-handling, 4 negative, 3 boundary, and 3 mixed-category) in `tests/structural/dataset.test.js`.
+- [ ] T009b [P] Write a failing structural test verifying that the evaluation runner invokes all three evaluation layers required by FR-012.
 - [ ] T010 Run the initial test suite using `node --test` and verify that the tests fail as expected before implementation.
 
 ---
@@ -64,9 +66,9 @@ description: "Task list for UI5 Code Review Assistant implementation and evaluat
 
 **Purpose**: Implement schema validator, reviewer logic, and CLI tool
 
-- [ ] T012 [P] [US2] Implement `src/schema-validator.js` to validate review reports against `contracts/output-schema.json`
-- [ ] T013 [US1] Implement `src/reviewer.js` to interact with the Gemini API using `@google/genai`, load `prompts/system-prompt.txt`, request structured JSON output, and parse the response while handling malformed or invalid model responses.
-- [ ] T014 [US1] Implement `src/cli.js` for command-line argument parsing, loading `.env` via `dotenv`, executing file review on a single UI5 controller or XML view file, and handling `service_error`, `invalid_model_response`, and `success` statuses without exposing secrets.
+- [ ] T012 [P] [US2] Implement `src/schema-validator.js` (FR-004) to validate review reports against `contracts/output-schema.json`
+- [ ] T013 [US1] Implement `src/reviewer.js` (FR-003, FR-005, FR-006) to interact with the Gemini API using `@google/genai`, load `prompts/system-prompt.txt`, request structured JSON output, and parse the response while handling malformed or invalid model responses.
+- [ ] T014 [US1] Implement `src/cli.js` (FR-001) for command-line argument parsing, loading `.env` via `dotenv`, executing file review on a single UI5 controller or XML view file, and handling `service_error`, `invalid_model_response`, and `success` statuses without exposing secrets.
 
 ---
 
@@ -83,7 +85,7 @@ description: "Task list for UI5 Code Review Assistant implementation and evaluat
 **Purpose**: Implement evaluation runner and run harness against 18 synthetic cases
 
 - [ ] T016 [US1] Write `evals/eval-runner.js` to run the live Gemini model once per case in `evals/dataset.json`, independently validate outputs structurally and through property tests, calculate per-category precision, recall, F1 and overall macro-F1 against ground truth, and write evaluation results and metrics to `evidence/`. Catch and classify service/model failures as `service_error`, invalid model responses as `invalid_model_response`, and evaluation failures as `evaluation_error`, without crashing or counting failures as review findings.
-
+- [ ] T016a Assert in `evals/eval-runner.js` that the final evaluation sets an explicit PASS/FAIL outcome based on overall macro-F1 >= 0.70 (FR-011), and writes this decision to `evidence/` alongside the evaluation metrics.
 ---
 
 ## Phase 8: Harness Review & Final Log
