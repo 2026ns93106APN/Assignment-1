@@ -1,0 +1,20 @@
+{
+  "name": "ui5-review-assistant",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "UI5 Code Review Assistant using Gemini API",
+  "scripts": {
+    "test": "node --test \"tests/**/*.test.js\"",
+    "lint": "eslint -c .harness/eslint.config.js --max-warnings 0 src tests",
+    "secret-scan": "node secret-scan.js",
+    "harness": "node .harness/run-harness.js"
+  },
+  "dependencies": {
+    "@google/genai": "^1.0.0",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "eslint": "^9.0.0",
+    "eslint-plugin-security": "^3.0.0"
+  }
+}

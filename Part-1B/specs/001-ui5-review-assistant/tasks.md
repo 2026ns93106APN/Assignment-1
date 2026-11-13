@@ -24,10 +24,10 @@ description: "Task list for UI5 Code Review Assistant implementation and evaluat
 
 **Purpose**: Create directory structure, configuration files, and utility scripts
 
-- [ ] T001 Create required directories: `src/`, `prompts/`, `evals/`, `tests/unit/`, `tests/property/`, `tests/structural/`, `.harness/`, `evidence/`
-- [ ] T002 [P] Create root `package.json` with `"type": "module"` and dependencies (`@google/genai`, `dotenv`, `eslint`, `eslint-plugin-security`)
-- [ ] T003 [P] Create `.harness/eslint.config.js` with flat config and security plugin rules enforcing zero tolerance
-- [ ] T004 [P] Create a secret-scan script in repository root to scan files for leaked credentials
+- [X] T001 Create required directories: `src/`, `prompts/`, `evals/`, `tests/unit/`, `tests/property/`, `tests/structural/`, `.harness/`, `evidence/`
+- [X] T002 [P] Create root `package.json` with `"type": "module"` and dependencies (`@google/genai`, `dotenv`, `eslint`, `eslint-plugin-security`)
+- [X] T003 [P] Create `.harness/eslint.config.js` with flat config and security plugin rules enforcing zero tolerance
+- [X] T004 [P] Create a secret-scan script in repository root to scan files for leaked credentials
 
 ---
 
@@ -35,8 +35,8 @@ description: "Task list for UI5 Code Review Assistant implementation and evaluat
 
 **Purpose**: Define system instructions for the Gemini model
 
-- [ ] T005 Write `prompts/system-prompt.txt` content, explicitly including instructions for reviewing hardcoded user-visible text (i18n) and missing error handling, and specifying the convention that a missing-error-handling finding reports the line where the risky call begins
-- [ ] T005a [HUMAN] Verify that `prompts/system-prompt.txt` uses the same line-number convention as the ground-truth annotations in `evals/dataset.json`.
+- [X] T005 Write `prompts/system-prompt.txt` content, explicitly including instructions for reviewing hardcoded user-visible text (i18n) and missing error handling, and specifying the convention that a missing-error-handling finding reports the line where the risky call begins
+- [X] T005a [HUMAN] Verify that `prompts/system-prompt.txt` uses the same line-number convention as the ground-truth annotations in `evals/dataset.json`.
 
 ---
 
@@ -44,12 +44,12 @@ description: "Task list for UI5 Code Review Assistant implementation and evaluat
 
 **Purpose**: Write failing structural and property tests against stored fixtures
 
-- [ ] T006 [P] [US2] Write failing structural tests against `contracts/output-schema.json` in `tests/structural/schema.test.js` using stored fixture JSON (not live calls)
-- [ ] T007 [P] [US1] Write failing property tests for verbatim-evidence and valid-line-number rules (FR-007) in `tests/property/verbatim.test.js` against stored fixtures
-- [ ] T008 [P] [US1] Write failing property tests for category exclusions (FR-008) in `tests/property/exclusions.test.js` against stored fixtures
-- [ ] T009 [P] [US1] Write failing property tests for ground-truth matching with ±2 line tolerance and single-match rule (FR-009) in `tests/property/matching.test.js` against stored fixtures
-- [ ] T009a [P] [US1] Write a failing structural test asserting `evals/dataset.json` has exactly 18 cases in the FR-013 distribution (4 positive-hardcoded-text, 4 positive-missing-error-handling, 4 negative, 3 boundary, and 3 mixed-category) in `tests/structural/dataset.test.js`.
-- [ ] T009b [P] Write a failing structural test verifying that the evaluation runner invokes all three evaluation layers required by FR-012.
+- [X] T006 [P] [US2] Write failing structural tests against `contracts/output-schema.json` in `tests/structural/schema.test.js` using stored fixture JSON (not live calls)
+- [X] T007 [P] [US1] Write failing property tests for verbatim-evidence and valid-line-number rules (FR-007) in `tests/property/verbatim.test.js` against stored fixtures
+- [X] T008 [P] [US1] Write failing property tests for category exclusions (FR-008) in `tests/property/exclusions.test.js` against stored fixtures
+- [X] T009 [P] [US1] Write failing property tests for ground-truth matching with ±2 line tolerance and single-match rule (FR-009) in `tests/property/matching.test.js` against stored fixtures
+- [X] T009a [P] [US1] Write a failing structural test asserting `evals/dataset.json` has exactly 18 cases in the FR-013 distribution (4 positive-hardcoded-text, 4 positive-missing-error-handling, 4 negative, 3 boundary, and 3 mixed-category) in `tests/structural/dataset.test.js`.
+- [X] T009b [P] Write a failing structural test verifying that the evaluation runner invokes all three evaluation layers required by FR-012.
 - [ ] T010 Run the initial test suite using `node --test` and verify that the tests fail as expected before implementation.
 
 ---
