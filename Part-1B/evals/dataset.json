@@ -1,0 +1,238 @@
+{
+  "cases": [
+    {
+      "id": "C01",
+      "type": "positive-hardcoded-text",
+      "file": "controller.js",
+      "input": "onPressSave: function () {\n  sap.m.MessageToast.show(\"Please enter a value\");\n}",
+      "expectedFindings": [
+        {
+          "category": "hardcoded-text",
+          "line": 2
+        }
+      ],
+      "notes": "Hardcoded user-visible message displayed through MessageToast.",
+      "testsRequirement": ["FR-002", "FR-008", "FR-009"]
+    },
+    {
+      "id": "C02",
+      "type": "positive-hardcoded-text",
+      "file": "view.xml",
+      "input": "<Button\n  text=\"Save Changes\"\n  press=\"onSave\"\n/>",
+      "expectedFindings": [
+        {
+          "category": "hardcoded-text",
+          "line": 2
+        }
+      ],
+      "notes": "Button contains hardcoded user-visible text instead of an i18n reference.",
+      "testsRequirement": ["FR-002", "FR-008", "FR-009"]
+    },
+    {
+      "id": "C03",
+      "type": "positive-missing-error-handling",
+      "file": "controller.js",
+      "input": "loadData: function () {\n  fetch(\"/api/orders\")\n    .then(response => response.json());\n}",
+      "expectedFindings": [
+        {
+          "category": "missing-error-handling",
+          "line": 2
+        }
+      ],
+      "notes": "Fetch operation has no rejection handling.",
+      "testsRequirement": ["FR-002", "FR-008", "FR-009"]
+    },
+    {
+      "id": "C04",
+      "type": "negative",
+      "file": "controller.js",
+      "input": "onSave: function () {\n  var message = this.getView().getModel(\"i18n\").getResourceBundle().getText(\"saveSuccess\");\n  sap.m.MessageToast.show(message);\n}",
+      "expectedFindings": [],
+      "notes": "User-visible text is retrieved through the i18n resource bundle and no missing error handling is present.",
+      "testsRequirement": ["FR-008", "FR-009"]
+    },
+    {
+      "id": "C05",
+      "type": "positive-missing-error-handling",
+      "file": "controller.js",
+      "input": "onLoad: function () {\n  this.getView().getModel().read(\"/Orders\", {\n    success: function (data) {\n      console.log(data);\n    }\n  });\n}",
+      "expectedFindings": [
+        {
+          "category": "missing-error-handling",
+          "line": 2
+        }
+      ],
+      "notes": "OData read operation has a success callback but no error callback. The read call start is used as the finding location because the missing callback has no physical line.",
+      "testsRequirement": ["FR-002", "FR-008", "FR-009"]
+    },
+    {
+      "id": "C06",
+      "type": "positive-hardcoded-text",
+      "file": "controller.js",
+      "input": "onInit: function () {\n  this.byId(\"saveButton\").setText(\"Save\");\n}",
+      "expectedFindings": [
+        {
+          "category": "hardcoded-text",
+          "line": 2
+        }
+      ],
+      "notes": "A hardcoded string is assigned to a user-visible button text property.",
+      "testsRequirement": ["FR-002", "FR-008", "FR-009"]
+    },
+    {
+      "id": "C07",
+      "type": "positive-hardcoded-text",
+      "file": "view.xml",
+      "input": "<Dialog\n  title=\"Confirm Deletion\"\n  contentWidth=\"30rem\"\n/>",
+      "expectedFindings": [
+        {
+          "category": "hardcoded-text",
+          "line": 2
+        }
+      ],
+      "notes": "Dialog title contains hardcoded user-visible text.",
+      "testsRequirement": ["FR-002", "FR-008", "FR-009"]
+    },
+    {
+      "id": "C08",
+      "type": "positive-missing-error-handling",
+      "file": "controller.js",
+      "input": "loadCustomers: function () {\n  fetch(\"/api/customers\");\n}",
+      "expectedFindings": [
+        {
+          "category": "missing-error-handling",
+          "line": 2
+        }
+      ],
+      "notes": "Fetch request has no rejection handling.",
+      "testsRequirement": ["FR-002", "FR-008", "FR-009"]
+    },
+    {
+      "id": "C09",
+      "type": "positive-missing-error-handling",
+      "file": "controller.js",
+      "input": "readOrders: function () {\n  this.getView().getModel().read(\"/Orders\", {\n    success: function (data) {\n      console.log(data);\n    }\n  });\n}",
+      "expectedFindings": [
+        {
+          "category": "missing-error-handling",
+          "line": 2
+        }
+      ],
+      "notes": "OData read operation has a success callback but no error callback.",
+      "testsRequirement": ["FR-002", "FR-008", "FR-009"]
+    },
+    {
+      "id": "C10",
+      "type": "negative",
+      "file": "controller.js",
+      "input": "loadData: function () {\n  fetch(\"/api/orders\")\n    .then(response => response.json())\n    .catch(error => console.error(error));\n}",
+      "expectedFindings": [],
+      "notes": "Fetch request includes rejection handling.",
+      "testsRequirement": ["FR-008", "FR-009"]
+    },
+    {
+      "id": "C11",
+      "type": "negative",
+      "file": "controller.js",
+      "input": "readOrders: function () {\n  this.getView().getModel().read(\"/Orders\", {\n    success: function (data) {\n      console.log(data);\n    },\n    error: function (error) {\n      console.error(error);\n    }\n  });\n}",
+      "expectedFindings": [],
+      "notes": "OData read operation includes both success and error callbacks.",
+      "testsRequirement": ["FR-008", "FR-009"]
+    },
+    {
+      "id": "C12",
+      "type": "negative",
+      "file": "view.xml",
+      "input": "<Button\n  text=\"{i18n>saveButtonText}\"\n  press=\"onSave\"\n/>",
+      "expectedFindings": [],
+      "notes": "Button text uses an i18n resource binding.",
+      "testsRequirement": ["FR-008", "FR-009"]
+    },
+    {
+      "id": "C13",
+      "type": "boundary",
+      "file": "view.xml",
+      "input": "<Input\n  placeholder=\"Enter customer name\"\n  value=\"{customerName}\"\n/>",
+      "expectedFindings": [
+        {
+          "category": "hardcoded-text",
+          "line": 2
+        }
+      ],
+      "notes": "Placeholder text is user-visible even though the main input value is data-bound.",
+      "testsRequirement": ["FR-008", "FR-009", "FR-013"]
+    },
+    {
+      "id": "C14",
+      "type": "boundary",
+      "file": "controller.js",
+      "input": "onSave: function () {\n  // Display the message \"Please save your changes\"\n  console.log(\"Save operation started\");\n}",
+      "expectedFindings": [],
+      "notes": "Strings appear in a comment and console logging, not in user-visible UI components.",
+      "testsRequirement": ["FR-008", "FR-009", "FR-013"]
+    },
+    {
+      "id": "C15",
+      "type": "boundary",
+      "file": "controller.js",
+      "input": "loadData: function () {\n  fetch(\"/api/orders\")\n    .then(response => response.json())\n    .catch(error => console.error(error));\n}",
+      "expectedFindings": [],
+      "notes": "Asynchronous operation includes explicit rejection handling, so it should not be flagged.",
+      "testsRequirement": ["FR-008", "FR-009", "FR-013"]
+    },
+    {
+      "id": "C16",
+      "type": "mixed-category",
+      "file": "controller.js",
+      "input": "onSave: function () {\n  sap.m.MessageToast.show(\"Saved successfully\");\n  this.getView().getModel().read(\"/Orders\", {\n    success: function (data) {\n      console.log(data);\n    }\n  });\n}",
+      "expectedFindings": [
+        {
+          "category": "hardcoded-text",
+          "line": 2
+        },
+        {
+          "category": "missing-error-handling",
+          "line": 3
+        }
+      ],
+      "notes": "Contains both a hardcoded user-visible message and an OData read operation without an error callback.",
+      "testsRequirement": ["FR-002", "FR-008", "FR-009", "FR-013"]
+    },
+    {
+      "id": "C17",
+      "type": "mixed-category",
+      "file": "controller.js",
+      "input": "loadOrders: function () {\n  this.byId(\"statusText\").setText(\"Loading orders\");\n  fetch(\"/api/orders\")\n    .then(response => response.json());\n}",
+      "expectedFindings": [
+        {
+          "category": "hardcoded-text",
+          "line": 2
+        },
+        {
+          "category": "missing-error-handling",
+          "line": 3
+        }
+      ],
+      "notes": "Contains a hardcoded UI text assignment and a fetch request without rejection handling.",
+      "testsRequirement": ["FR-002", "FR-008", "FR-009", "FR-013"]
+    },
+    {
+      "id": "C18",
+      "type": "mixed-category",
+      "file": "controller.js",
+      "input": "onSubmit: function () {\n  sap.m.MessageBox.error(\"Unable to submit order\");\n  Promise.resolve().then(function () {\n    return saveOrder();\n  });\n}",
+      "expectedFindings": [
+        {
+          "category": "hardcoded-text",
+          "line": 2
+        },
+        {
+          "category": "missing-error-handling",
+          "line": 3
+        }
+      ],
+      "notes": "Contains a hardcoded user-visible error message and a Promise chain without rejection handling.",
+      "testsRequirement": ["FR-002", "FR-008", "FR-009", "FR-013"]
+    }
+  ]
+}
