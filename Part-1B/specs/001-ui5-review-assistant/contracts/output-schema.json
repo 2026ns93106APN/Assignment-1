@@ -1,0 +1,56 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "UI5ReviewReport",
+  "type": "object",
+  "required": ["status", "metadata", "findings"],
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": ["success", "service_error", "invalid_model_response", "evaluation_error"]
+    },
+    "metadata": {
+      "type": "object",
+      "required": ["timestamp", "filePath"],
+      "properties": {
+        "timestamp": { "type": "string" },
+        "filePath": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["category", "line", "severity", "evidence", "rationale", "suggestion"],
+        "properties": {
+          "category": {
+            "type": "string",
+            "enum": ["hardcoded-text", "missing-error-handling"]
+          },
+          "line": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "severity": {
+            "type": "string",
+            "enum": ["low", "medium", "high"]
+          },
+          "evidence": {
+            "type": "string",
+            "minLength": 1
+          },
+          "rationale": {
+            "type": "string",
+            "minLength": 1
+          },
+          "suggestion": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
