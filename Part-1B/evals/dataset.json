@@ -160,7 +160,7 @@
         }
       ],
       "notes": "Placeholder text is user-visible even though the main input value is data-bound.",
-      "testsRequirement": ["FR-008", "FR-009", "FR-013"]
+      "testsRequirement": ["FR-008", "FR-009"]
     },
     {
       "id": "C14",
@@ -169,7 +169,7 @@
       "input": "onSave: function () {\n  // Display the message \"Please save your changes\"\n  console.log(\"Save operation started\");\n}",
       "expectedFindings": [],
       "notes": "Strings appear in a comment and console logging, not in user-visible UI components.",
-      "testsRequirement": ["FR-008", "FR-009", "FR-013"]
+      "testsRequirement": ["FR-008", "FR-009"]
     },
     {
       "id": "C15",
@@ -178,7 +178,7 @@
       "input": "loadData: function () {\n  fetch(\"/api/orders\")\n    .then(response => response.json())\n    .catch(error => console.error(error));\n}",
       "expectedFindings": [],
       "notes": "Asynchronous operation includes explicit rejection handling, so it should not be flagged.",
-      "testsRequirement": ["FR-008", "FR-009", "FR-013"]
+      "testsRequirement": ["FR-008", "FR-009"]
     },
     {
       "id": "C16",
@@ -196,7 +196,7 @@
         }
       ],
       "notes": "Contains both a hardcoded user-visible message and an OData read operation without an error callback.",
-      "testsRequirement": ["FR-002", "FR-008", "FR-009", "FR-013"]
+      "testsRequirement": ["FR-002", "FR-008", "FR-009"]
     },
     {
       "id": "C17",
@@ -214,7 +214,7 @@
         }
       ],
       "notes": "Contains a hardcoded UI text assignment and a fetch request without rejection handling.",
-      "testsRequirement": ["FR-002", "FR-008", "FR-009", "FR-013"]
+      "testsRequirement": ["FR-002", "FR-008", "FR-009"]
     },
     {
       "id": "C18",
@@ -232,7 +232,7 @@
         }
       ],
       "notes": "Contains a hardcoded user-visible error message and a Promise chain without rejection handling.",
-      "testsRequirement": ["FR-002", "FR-008", "FR-009", "FR-013"]
+      "testsRequirement": ["FR-002", "FR-008", "FR-009"]
     }
   ]
 }
