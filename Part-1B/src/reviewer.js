@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { GoogleGenAI } from '@google/genai';
 import fs from 'fs';
 import path from 'path';
@@ -22,7 +23,7 @@ export async function reviewContent(content, filePath = 'input.js') {
 
   let ai;
   try {
-    ai = new GoogleGenAI();
+    ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
   } catch (err) {
     return {
       status: 'service_error',
@@ -33,7 +34,7 @@ export async function reviewContent(content, filePath = 'input.js') {
 
   try {
     const response = await ai.models.generateContent({
-      model: process.env.GEMINI_MODEL || 'gemini-1.5-flash',
+      model: process.env.GEMINI_MODEL || 'gemini-flash-lite-latest',
       contents: [
         {
           role: 'user',
@@ -97,8 +98,8 @@ export async function reviewContent(content, filePath = 'input.js') {
     if (!parsed.metadata) {
       parsed.metadata = baseMetadata;
     } else {
-      parsed.metadata.timestamp = parsed.metadata.timestamp || timestamp;
-      parsed.metadata.filePath = parsed.metadata.filePath || filePath;
+      parsed.metadata.timestamp = timestamp;
+      parsed.metadata.filePath = filePath;
     }
     if (!Array.isArray(parsed.findings)) {
       parsed.findings = [];
@@ -115,7 +116,7 @@ export async function reviewContent(content, filePath = 'input.js') {
 
     return parsed;
 
-  } catch (apiErr) {
+    } catch (apiErr) {
     return {
       status: 'service_error',
       metadata: baseMetadata,
