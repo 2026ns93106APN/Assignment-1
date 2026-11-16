@@ -5,6 +5,10 @@ Analyze the provided UI5 controller (.js) or XML view file and identify issues s
 
 Do NOT report unrelated code-quality issues (formatting, unused variables, naming conventions, performance anti-patterns, deprecated APIs).
 
+Verbatim Evidence Requirement:
+
+When extracting the `evidence` field, copy the exact text directly from the input file, character for character, including all original spacing, indentation, and line breaks. Do not reformat, re-indent, reconstruct, or paraphrase the code. If you cannot locate an exact verbatim excerpt, choose a shorter exact substring instead of reconstructing one.
+
 Output your response as a JSON object matching this exact schema:
 {
   "status": "success",
