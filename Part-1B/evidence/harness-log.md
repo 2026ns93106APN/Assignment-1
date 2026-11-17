@@ -165,3 +165,52 @@ The lint-security gate passed after the scoped exceptions, without globally disa
 - `src/schema-validator.js` — inspected numeric array-index access.
 - Harness verification showing the lint-security gate passing while the secret scan remained passing.
 - Separate Git commits for the constitution amendment and ESLint configuration change.
+
+## Entry 4 — Evaluation Runner Implementation, RPM Discovery and Pacing Fix
+
+**Date:** 16–17 November 2026
+
+**What I ran:**
+
+- Used `/speckit.implement` for T016 only, instructing the agent to implement `evals/eval-runner.js`.
+- Specified that the implementation should provide `matchFindings`, `getSupportedLayers`, and `runEvaluation`.
+- Explicitly instructed the agent not to run tests, lint, or the harness, and not to invoke `runEvaluation()` automatically.
+- Reviewed the agent's tool-call transcript and the generated evaluation runner.
+- Subsequently ran the tests deliberately to verify the implementation.
+
+**What I found:**
+
+1. **Agent exceeded the instructed scope:** Despite being explicitly told not to run tests, the agent independently executed `node --test`. This triggered unplanned live API calls. Reviewing the tool-call transcript revealed that the agent had gone beyond the requested implementation task.
+
+2. **RPM limit discovery:** After the unplanned test execution, I checked the Google AI Studio rate-limit dashboard. The `gemini-flash-lite-latest` model had reached **16/15 requests per minute (RPM)**, exceeding the per-minute limit. The daily quota was 500 requests and was not exhausted. This showed that running all 18 evaluation cases back-to-back could cause rate-limit failures partway through the evaluation.
+
+3. **Verbatim evidence test failure:** During the subsequent deliberate test run, `verbatim.test.js` failed on case C09. The model returned the correct code but changed its whitespace and indentation, so the evidence did not exactly match the original input. A retry of the same case with the original prompt succeeded, suggesting that the failure could be due to model non-determinism rather than a consistently reproducible issue.
+
+4. **PASS/FAIL logic review:** I also reviewed an uncommitted change that required all 18 cases to succeed before reporting PASS. This was stricter than the existing FR-011 definition, which specifies PASS when macro-F1 is at least 0.70.
+
+**Why it mattered:**
+
+The agent running tests outside the explicitly requested scope demonstrated why reviewing tool-call transcripts is important, rather than relying only on the final code changes or the agent's summary. The unplanned API calls also exposed a rate-limit risk before the formal evaluation.
+
+Without pacing, the 18-case evaluation could have exceeded the per-minute API limit and produced avoidable service errors. The C09 failure also highlighted that exact evidence preservation needed stronger prompting because the evaluation required verbatim excerpts, including original whitespace and indentation.
+
+The PASS/FAIL review was important for maintaining consistency between the implementation and the written specification. Introducing an additional all-cases-success condition without amending FR-011 would have silently changed the acceptance criteria.
+
+**What I changed:**
+
+I made the following changes:
+
+1. **Added API pacing:** Added a `sleep(4500)` delay after each case in the main evaluation loop in `evals/eval-runner.js`, allowing approximately 4.5 seconds between cases to reduce the risk of exceeding the 15 RPM limit.
+
+2. **Strengthened the evidence instruction:** Updated `prompts/system-prompt.txt` with an explicit verbatim-evidence requirement. It instructs the model to preserve the exact original whitespace, indentation, and line breaks rather than reformatting the extracted code.
+
+3. **Preserved the specified PASS/FAIL condition:** Reviewed and reverted the uncommitted stricter PASS/FAIL change. The evaluator continued to use the documented FR-011 condition: macro-F1 greater than or equal to 0.70.
+
+**Evidence:**
+
+- `evals/eval-runner.js` — evaluation functions and 4.5-second pacing delay.
+- `prompts/system-prompt.txt` — verbatim evidence instruction.
+- `tests/property/verbatim.test.js` — C09 exact-evidence validation.
+- Google AI Studio rate-limit dashboard — observed 16/15 RPM for `gemini-flash-lite-latest`.
+- Agent tool-call transcript — evidence of the unplanned `node --test` execution.
+- FR-011 in the specification — original macro-F1 acceptance threshold.
