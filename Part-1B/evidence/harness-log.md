@@ -16,3 +16,90 @@
   - All 18 evaluation cases must be represented in the evaluation results.
   - Service errors, invalid model responses, and evaluation errors must be distinguished from review findings.
   - Evaluation results must be saved for offline inspection.
+
+  ## Entry 1 — Pre-implementation Review
+
+**Date:** 15 November 2026
+
+**What I ran:**
+- Reviewed the initially generated files under `src/`.
+- Ran a direct smoke test using `node -e "import('./src/reviewer.js')..."` to check whether the reviewer could make a live API call.
+- Temporarily added `console.error('DEBUG...')` statements inside both catch blocks to expose the underlying errors that were being hidden by the existing error handling.
+
+**What I found:**
+
+The initial implementation had three issues in `src/reviewer.js`:
+
+1. **API key initialization:** `reviewer.js` instantiated `GoogleGenAI` without passing an API key. Although `cli.js` imported `dotenv/config`, `reviewer.js` did not load the environment variables itself. This meant that calling the reviewer directly did not reliably load the API key from `.env`.
+
+2. **Unavailable model fallback:** The fallback model was hardcoded as `gemini-1.5-flash`. The API returned a 404 error indicating that this model was no longer available.
+
+3. **Metadata integrity:** The response parsing logic allowed metadata returned by the model to overwrite the actual computed `timestamp` and `filePath`. This could result in incorrect metadata being included in an otherwise successful review response.
+
+The first smoke test returned `service_error` without showing the underlying exception because the catch blocks swallowed the detailed error. Adding temporary debug logging helped identify the model availability issue first. After correcting the model name, the next test exposed the API key initialization issue.
+
+**Why it mattered:**
+
+These were integration and implementation issues, not problems with the model's review quality. If left unresolved, they could have caused every live evaluation case to fail with `service_error`. Fixing them before the formal evaluation ensured that the evaluation measured the reviewer's actual performance rather than a broken API integration. The metadata issue also mattered because the application must preserve its own file and timestamp information instead of trusting values echoed by the model.
+
+**What I changed:**
+
+I manually corrected all three issues in `src/reviewer.js`:
+
+- Added `import 'dotenv/config'` so the reviewer loads environment variables directly.
+- Passed `apiKey: process.env.GEMINI_API_KEY` explicitly when creating the `GoogleGenAI` instance.
+- Replaced the unavailable `gemini-1.5-flash` fallback with `gemini-flash-lite-latest`.
+- Updated the metadata merge logic so the application always retains its computed `timestamp` and `filePath`, regardless of what the model returns.
+
+After confirming the fixes, I removed the temporary debug logging.
+
+**Evidence:**
+- Initial source snapshot: `evidence/initial-generation/`
+- Updated implementation: `src/reviewer.js`
+- Direct smoke-test output confirming a successful review response with the expected metadata and findings.
+
+## Entry 2 — First Harness Run
+
+**Date:** 15 November 2026
+
+**What I ran:**
+
+Ran `npm run harness` after the initial `src/` implementation was available.
+
+**What I found:**
+
+The harness produced the following results:
+
+| Gate                |Result| Details                           |
+|---------------------|------|-----------------------------------|
+| Secret scan         | PASS | No secret-related issues detected.|
+| Lint + security     | FAIL | 8 warnings, 0 errors.             |
+| Tests               | FAIL | 5 of 7 tests passed; 2 failed.    |
+
+The lint-security gate reported:
+
+- **7 instances of `security/detect-non-literal-fs-filename`** across `src/cli.js`, `src/reviewer.js`, and four test files. These involved reading file paths supplied by the CLI user or using fixed test fixtures.
+- **1 instance of `security/detect-object-injection`** in `src/schema-validator.js`. It flagged `report.findings[i]`, which uses a bounded numeric array index rather than a user-controlled object key.
+
+Both test failures were `ERR_MODULE_NOT_FOUND` errors for `evals/eval-runner.js`. The evaluation runner had not been implemented yet because it belonged to a separate task. The remaining 5 tests passed.
+
+**Why it mattered:**
+
+The secret scan passed, but the lint-security failure required a decision. I needed to determine whether the warnings represented genuine security risks that required code restructuring or whether narrowly scoped exceptions were more appropriate.
+
+For these specific cases, restructuring would not meaningfully improve security. The file reads were part of the intended CLI and test workflows, and the flagged array access used a bounded numeric index. The warnings therefore needed to be reviewed and documented rather than blindly suppressed.
+
+The two test failures were due to the evaluation runner not being implemented yet, rather than defects in the existing functionality.
+
+**What I changed:**
+
+I reviewed the individual security warnings and identified the specific files and rules involved. This review became the basis for the subsequent constitution amendment and narrowly scoped ESLint exceptions, rather than disabling security rules globally.
+
+I did not modify the tests to work around the missing evaluation runner, since its implementation was planned as a separate task.
+
+**Evidence:**
+
+- No separate, preserved raw harness-results snapshot of this specific 15 November run exists.
+- `evidence/harness-results/` contains a later set of harness outputs dated 16 November; these should not be treated as the original first-run results.
+- `evidence/pre-implementation-results/` contains earlier outputs dated 13 November and is not evidence of this run.
+- The first-run results described above are recorded in this harness log based on the observed run.
