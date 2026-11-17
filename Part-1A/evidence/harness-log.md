@@ -487,6 +487,10 @@ The final source implementation consists of:
 2. `src/rules.js`
 3. `src/validator.js`
 
+### Final Decision & Limitations
+**Decision:** ACCEPT
+**Known Limitations:** While the validator enforces strict JSON schema and routing rules, it operates purely via static analysis. It does not verify if the file paths or resource roots declared in `sap.ui5.models` actually exist on the local filesystem.
+
 ### Review checklist
 
 The implementation must be reviewed against the following criteria:
