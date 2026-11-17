@@ -214,3 +214,78 @@ I made the following changes:
 - Google AI Studio rate-limit dashboard — observed 16/15 RPM for `gemini-flash-lite-latest`.
 - Agent tool-call transcript — evidence of the unplanned `node --test` execution.
 - FR-011 in the specification — original macro-F1 acceptance threshold.
+
+## Entry 5 — Final Evaluation Results
+
+**Date:** 17 November 2026
+
+**What I ran:**
+
+Ran the full `runEvaluation()` function against all 18 cases in the evaluation dataset, with the 4.5-second pacing delay in place to reduce the risk of exceeding the API's per-minute request limit.
+
+The evaluation used the macro-F1 acceptance threshold of 0.70, established in FR-011 before the formal evaluation run.
+
+**What I found:**
+
+The evaluation returned the following overall result:
+
+**Outcome: PASS**
+
+- Macro-F1: **0.929**
+- Required threshold: **0.70**
+- Successful model responses: **16/18**
+- Service errors: **2/18**
+- Invalid model responses: **0**
+- Evaluation errors: **0**
+
+The two service errors affected:
+- One `positive-hardcoded-text` XML case.
+- One `mixed-category` controller.js case.
+
+These were recorded separately under FR-014 and were not counted as review findings or review misses.
+
+**Per-category metrics:**
+
+| Category | Precision | Recall | F1 |
+|---|---:|---:|---:|
+| hardcoded-text | 1.000 | 1.000 | 1.000 |
+| missing-error-handling | 0.750 | 1.000 | 0.857 |
+
+The `hardcoded-text` category achieved perfect precision, recall, and F1 on the successfully evaluated cases.
+
+The `missing-error-handling` category produced two false positives, both in C10 and C15.
+
+**False-positive analysis:**
+
+Both C10 and C15 contain an existing `.catch(error => console.error(error))` block.
+
+According to the dataset's ground truth and FR-008, the presence of a catch block is sufficient to count as error handling. Therefore, both cases were labelled as negative or boundary cases with no expected findings.
+
+However, the model flagged both operations because it considered console-only logging insufficient, reasoning that the error should also be handled in a way that informs the user or manages the application flow.
+
+This represents a semantic disagreement about the meaning of error handling rather than an implementation or evaluation-scoring bug. C15 was specifically designed as a boundary case, making this a useful observation about the model's interpretation of the requirement.
+
+**Why it mattered:**
+
+The evaluation demonstrated that the application exceeded the required macro-F1 threshold. It also highlighted a difference between the model's interpretation of error handling and the definition used by the evaluation dataset.
+
+Importantly, I did not change the expected findings for C10 or C15 to match the model's output after seeing the results. I retained the original ground truth and reported the false positives as measured.
+
+This maintained the evaluation discipline required by FR-011 and Principle II: acceptance criteria and expected results should be established before evaluation, not adjusted afterwards to improve the score.
+
+The two service errors also mean that only 16 of the 18 cases produced successful model responses. Although all 18 cases are represented in the saved results, the metrics should be interpreted with this coverage limitation in mind.
+
+**What I changed:**
+
+No dataset ground-truth changes or threshold adjustments were made after the evaluation.
+
+The recorded evaluation results were retained as generated, including the two service errors and two false positives.
+
+**Evidence:**
+
+- `evidence/evaluation-results.json` — complete saved output from the 18-case evaluation.
+- C10 — negative case incorrectly flagged for missing error handling.
+- C15 — boundary case incorrectly flagged for missing error handling.
+- FR-008 — definition of missing error handling.
+- FR-011 — macro-F1 acceptance threshold of 0.70.
+- FR-014 — separate classification of service errors, invalid responses, and evaluation errors.
