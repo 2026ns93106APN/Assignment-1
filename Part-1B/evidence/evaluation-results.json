@@ -1,0 +1,462 @@
+{
+  "timestamp": "2026-11-17T09:20:06.947Z",
+  "threshold": 0.7,
+  "macroF1": 0.9285714285714286,
+  "outcome": "PASS",
+  "failureCounts": {
+    "success": 16,
+    "service_error": 2,
+    "invalid_model_response": 0,
+    "evaluation_error": 0
+  },
+  "perCategoryMetrics": {
+    "hardcoded-text": {
+      "truePositives": 6,
+      "falsePositives": 0,
+      "falseNegatives": 0,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+    },
+    "missing-error-handling": {
+      "truePositives": 6,
+      "falsePositives": 2,
+      "falseNegatives": 0,
+      "precision": 0.75,
+      "recall": 1,
+      "f1": 0.8571428571428571
+    }
+  },
+  "caseResults": [
+    {
+      "id": "C01",
+      "type": "positive-hardcoded-text",
+      "file": "controller.js",
+      "status": "success",
+      "expectedFindings": [
+        {
+          "category": "hardcoded-text",
+          "line": 2
+        }
+      ],
+      "actualFindings": [
+        {
+          "category": "hardcoded-text",
+          "line": 2,
+          "severity": "medium",
+          "evidence": "  sap.m.MessageToast.show(\"Please enter a value\");",
+          "rationale": "User-facing message text is hardcoded instead of using an i18n resource bundle.",
+          "suggestion": "Replace the hardcoded string with an i18n model binding, e.g., this.getView().getModel(\"i18n\").getResourceBundle().getText(\"ENTER_VALUE_KEY\")."
+        }
+      ],
+      "match": {
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0
+      }
+    },
+    {
+      "id": "C02",
+      "type": "positive-hardcoded-text",
+      "file": "view.xml",
+      "status": "success",
+      "expectedFindings": [
+        {
+          "category": "hardcoded-text",
+          "line": 2
+        }
+      ],
+      "actualFindings": [
+        {
+          "category": "hardcoded-text",
+          "line": 2,
+          "severity": "medium",
+          "evidence": "  text=\"Save Changes\"",
+          "rationale": "The button text is hardcoded directly in the view instead of using an i18n resource bundle for proper internationalization.",
+          "suggestion": "Replace the hardcoded string with an i18n binding expression, e.g., text=\"{i18n>saveChangesButtonText}\"."
+        }
+      ],
+      "match": {
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0
+      }
+    },
+    {
+      "id": "C03",
+      "type": "positive-missing-error-handling",
+      "file": "controller.js",
+      "status": "success",
+      "expectedFindings": [
+        {
+          "category": "missing-error-handling",
+          "line": 2
+        }
+      ],
+      "actualFindings": [
+        {
+          "category": "missing-error-handling",
+          "line": 2,
+          "severity": "high",
+          "evidence": "  fetch(\"/api/orders\")\n    .then(response => response.json());",
+          "rationale": "The fetch promise does not handle rejection or errors, which can lead to unhandled promise rejections if the network request fails.",
+          "suggestion": "Add a .catch() block to handle potential errors from the fetch request."
+        }
+      ],
+      "match": {
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0
+      }
+    },
+    {
+      "id": "C04",
+      "type": "negative",
+      "file": "controller.js",
+      "status": "success",
+      "expectedFindings": [],
+      "actualFindings": [],
+      "match": {
+        "truePositives": 0,
+        "falsePositives": 0,
+        "falseNegatives": 0
+      }
+    },
+    {
+      "id": "C05",
+      "type": "positive-missing-error-handling",
+      "file": "controller.js",
+      "status": "success",
+      "expectedFindings": [
+        {
+          "category": "missing-error-handling",
+          "line": 2
+        }
+      ],
+      "actualFindings": [
+        {
+          "category": "missing-error-handling",
+          "line": 2,
+          "severity": "high",
+          "evidence": "  this.getView().getModel().read(\"/Orders\", {\n    success: function (data) {\n      console.log(data);\n    }\n  });",
+          "rationale": "The OData read operation can fail due to network or server issues, but it only provides a success callback without an error callback.",
+          "suggestion": "Add an error callback function to the OData read call to handle potential failures gracefully."
+        }
+      ],
+      "match": {
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0
+      }
+    },
+    {
+      "id": "C06",
+      "type": "positive-hardcoded-text",
+      "file": "controller.js",
+      "status": "success",
+      "expectedFindings": [
+        {
+          "category": "hardcoded-text",
+          "line": 2
+        }
+      ],
+      "actualFindings": [
+        {
+          "category": "hardcoded-text",
+          "line": 2,
+          "severity": "medium",
+          "evidence": "  this.byId(\"saveButton\").setText(\"Save\");",
+          "rationale": "The button text is hardcoded as a literal string instead of utilizing the i18n resource bundle for internationalization support.",
+          "suggestion": "Replace the hardcoded string with an i18n model binding, e.g., this.byId(\"saveButton\").setText(this.getView().getModel(\"i18n\").getResourceBundle().getText(\"SAVE_BUTTON_TEXT\"));"
+        }
+      ],
+      "match": {
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0
+      }
+    },
+    {
+      "id": "C07",
+      "type": "positive-hardcoded-text",
+      "file": "view.xml",
+      "status": "service_error",
+      "expectedFindings": [
+        {
+          "category": "hardcoded-text",
+          "line": 2
+        }
+      ],
+      "actualFindings": [],
+      "match": {
+        "truePositives": 0,
+        "falsePositives": 0,
+        "falseNegatives": 0
+      }
+    },
+    {
+      "id": "C08",
+      "type": "positive-missing-error-handling",
+      "file": "controller.js",
+      "status": "success",
+      "expectedFindings": [
+        {
+          "category": "missing-error-handling",
+          "line": 2
+        }
+      ],
+      "actualFindings": [
+        {
+          "category": "missing-error-handling",
+          "line": 2,
+          "severity": "high",
+          "evidence": "  fetch(\"/api/customers\");",
+          "rationale": "The fetch API call is an asynchronous operation that can fail (e.g. network issues, server errors) but lacks any error handling or .catch() block.",
+          "suggestion": "Add a .catch() block or use try/catch with async/await to handle potential failures from the fetch request."
+        }
+      ],
+      "match": {
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0
+      }
+    },
+    {
+      "id": "C09",
+      "type": "positive-missing-error-handling",
+      "file": "controller.js",
+      "status": "success",
+      "expectedFindings": [
+        {
+          "category": "missing-error-handling",
+          "line": 2
+        }
+      ],
+      "actualFindings": [
+        {
+          "category": "missing-error-handling",
+          "line": 2,
+          "severity": "high",
+          "evidence": "  this.getView().getModel().read(\"/Orders\", {\n    success: function (data) {\n      console.log(data);\n    }\n  });",
+          "rationale": "The OData read operation can fail due to network or server issues, but it only provides a success callback without an error callback.",
+          "suggestion": "Add an error callback function to the OData read call to properly handle potential failures."
+        }
+      ],
+      "match": {
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0
+      }
+    },
+    {
+      "id": "C10",
+      "type": "negative",
+      "file": "controller.js",
+      "status": "success",
+      "expectedFindings": [],
+      "actualFindings": [
+        {
+          "category": "missing-error-handling",
+          "line": 2,
+          "severity": "medium",
+          "evidence": "  fetch(\"/api/orders\")",
+          "rationale": "The fetch operation may fail, and while there is a catch block, it only logs the error to the console without handling the failure gracefully for the user or application flow.",
+          "suggestion": "Implement proper error handling, such as displaying a message toast or dialog to inform the user about the failure."
+        }
+      ],
+      "match": {
+        "truePositives": 0,
+        "falsePositives": 1,
+        "falseNegatives": 0
+      }
+    },
+    {
+      "id": "C11",
+      "type": "negative",
+      "file": "controller.js",
+      "status": "success",
+      "expectedFindings": [],
+      "actualFindings": [],
+      "match": {
+        "truePositives": 0,
+        "falsePositives": 0,
+        "falseNegatives": 0
+      }
+    },
+    {
+      "id": "C12",
+      "type": "negative",
+      "file": "view.xml",
+      "status": "success",
+      "expectedFindings": [],
+      "actualFindings": [],
+      "match": {
+        "truePositives": 0,
+        "falsePositives": 0,
+        "falseNegatives": 0
+      }
+    },
+    {
+      "id": "C13",
+      "type": "boundary",
+      "file": "view.xml",
+      "status": "success",
+      "expectedFindings": [
+        {
+          "category": "hardcoded-text",
+          "line": 2
+        }
+      ],
+      "actualFindings": [
+        {
+          "category": "hardcoded-text",
+          "line": 2,
+          "severity": "medium",
+          "evidence": "  placeholder=\"Enter customer name\"",
+          "rationale": "The placeholder attribute contains a hardcoded user-facing string instead of referencing an i18n resource bundle.",
+          "suggestion": "Replace the hardcoded string with an i18n binding expression, e.g., placeholder=\"{i18n>customerNamePlaceholder}\"."
+        }
+      ],
+      "match": {
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0
+      }
+    },
+    {
+      "id": "C14",
+      "type": "boundary",
+      "file": "controller.js",
+      "status": "success",
+      "expectedFindings": [],
+      "actualFindings": [],
+      "match": {
+        "truePositives": 0,
+        "falsePositives": 0,
+        "falseNegatives": 0
+      }
+    },
+    {
+      "id": "C15",
+      "type": "boundary",
+      "file": "controller.js",
+      "status": "success",
+      "expectedFindings": [],
+      "actualFindings": [
+        {
+          "category": "missing-error-handling",
+          "line": 2,
+          "severity": "medium",
+          "evidence": "  fetch(\"/api/orders\")\n    .then(response => response.json())\n    .catch(error => console.error(error));",
+          "rationale": "The fetch operation only logs the error to the console via .catch() rather than implementing proper user-facing error handling or rejecting the promise for higher-level management.",
+          "suggestion": "Implement a robust error handling mechanism that notifies the user and properly handles the failed API request."
+        }
+      ],
+      "match": {
+        "truePositives": 0,
+        "falsePositives": 1,
+        "falseNegatives": 0
+      }
+    },
+    {
+      "id": "C16",
+      "type": "mixed-category",
+      "file": "controller.js",
+      "status": "service_error",
+      "expectedFindings": [
+        {
+          "category": "hardcoded-text",
+          "line": 2
+        },
+        {
+          "category": "missing-error-handling",
+          "line": 3
+        }
+      ],
+      "actualFindings": [],
+      "match": {
+        "truePositives": 0,
+        "falsePositives": 0,
+        "falseNegatives": 0
+      }
+    },
+    {
+      "id": "C17",
+      "type": "mixed-category",
+      "file": "controller.js",
+      "status": "success",
+      "expectedFindings": [
+        {
+          "category": "hardcoded-text",
+          "line": 2
+        },
+        {
+          "category": "missing-error-handling",
+          "line": 3
+        }
+      ],
+      "actualFindings": [
+        {
+          "category": "hardcoded-text",
+          "line": 2,
+          "severity": "medium",
+          "evidence": "  this.byId(\"statusText\").setText(\"Loading orders\");",
+          "rationale": "User-facing text string 'Loading orders' is hardcoded directly in the controller instead of using an i18n resource bundle for translatability.",
+          "suggestion": "Replace the hardcoded string with an i18n model property reference, e.g., this.getView().getModel(\"i18n\").getProperty(\"LOADING_ORDERS\")."
+        },
+        {
+          "category": "missing-error-handling",
+          "line": 3,
+          "severity": "high",
+          "evidence": "  fetch(\"/api/orders\")",
+          "rationale": "The fetch network request returns a Promise that may fail, but it lacks a .catch() block or try/catch handling for asynchronous failures.",
+          "suggestion": "Add a .catch() handler to the promise chain or use async/await within a try/catch block to properly handle network or server errors."
+        }
+      ],
+      "match": {
+        "truePositives": 2,
+        "falsePositives": 0,
+        "falseNegatives": 0
+      }
+    },
+    {
+      "id": "C18",
+      "type": "mixed-category",
+      "file": "controller.js",
+      "status": "success",
+      "expectedFindings": [
+        {
+          "category": "hardcoded-text",
+          "line": 2
+        },
+        {
+          "category": "missing-error-handling",
+          "line": 3
+        }
+      ],
+      "actualFindings": [
+        {
+          "category": "hardcoded-text",
+          "line": 2,
+          "severity": "medium",
+          "evidence": "  sap.m.MessageBox.error(\"Unable to submit order\");",
+          "rationale": "User-facing message text is hardcoded as a string literal instead of using an i18n resource bundle.",
+          "suggestion": "Replace the hardcoded string with an i18n model reference, e.g., this.getView().getModel(\"i18n\").getProperty(\"submitErrorKey\")."
+        },
+        {
+          "category": "missing-error-handling",
+          "line": 3,
+          "severity": "high",
+          "evidence": "  Promise.resolve().then(function () {\n    return saveOrder();\n  });",
+          "rationale": "The promise chain resulting from saveOrder() lacks a .catch() handler or try/catch mechanism to handle potential failures.",
+          "suggestion": "Add a .catch() error handler to the promise chain to gracefully handle any failures from saveOrder()."
+        }
+      ],
+      "match": {
+        "truePositives": 2,
+        "falsePositives": 0,
+        "falseNegatives": 0
+      }
+    }
+  ]
+}
