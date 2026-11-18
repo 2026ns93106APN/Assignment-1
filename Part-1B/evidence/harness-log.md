@@ -313,3 +313,49 @@ Before using the tool in a production environment, I would add retry and backoff
 ### Final Outcome
 
 Based on the evaluation score, predefined acceptance criteria, completed verification checks, and documented limitations, I consider the implementation acceptable for the scope of this assignment. The remaining limitations should be addressed before using it in a production environment.
+
+
+## Entry 6 – Fresh-Clone Verification
+
+**Date:** 18 November 2026
+
+### Objective
+
+Verify that Part 1B can be cloned, installed, and validated independently of the original development environment.
+
+### Steps Performed
+
+1. Cloned the repository into a fresh directory.
+2. Ran `npm install` to install dependencies.
+3. Ran `npm run harness`.
+4. Reviewed the saved harness output, particularly `tests.txt`.
+
+### Results
+
+All three harness gates reported PASS:
+
+- Secret scan: PASS
+- ESLint security checks: PASS
+- Automated tests: PASS
+
+However, reviewing the test output revealed an important limitation. The fresh clone did not contain a `.env` file, as expected because it is correctly excluded from Git. Consequently, live `reviewContent` calls failed with the error `API key should be set` and returned `service_error`.
+
+Despite these failures, the property tests in `exclusions.test.js` and `verbatim.test.js` still passed.
+
+### Finding and Limitation
+
+This revealed a gap in the property test design. The tests do not currently verify that the review operation completed successfully before checking properties such as category exclusion and verbatim evidence.
+
+As a result, these tests can pass without actually validating the findings when the Gemini API key is unavailable. In other words, the fresh-clone harness PASS confirms that the application and test suite execute without a configured API key, but it does not independently confirm that the review logic works.
+
+The review functionality was verified separately in the original development environment, where the API key was configured, and during the final 18-case evaluation.
+
+### Decision and Future Improvement
+
+I identified this limitation but decided not to modify the test assertions at this stage to avoid destabilising the existing test suite close to the submission deadline.
+
+As a future improvement, the property tests should assert `report.status === 'success'` before checking findings-based properties. They should also handle missing API credentials explicitly, with a clear skip or failure message rather than passing without validating the intended behaviour.
+
+### Outcome
+
+Fresh-clone verification completed, and all three harness gates passed. The limitation in the property tests was documented for future improvement rather than treated as evidence of successful live review functionality.
