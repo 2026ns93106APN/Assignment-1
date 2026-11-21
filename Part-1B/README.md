@@ -213,7 +213,9 @@ The acceptance threshold was defined before the final evaluation.
 
 **Evaluation outcome: PASS**
 
-The measured macro-F1 of 0.929 exceeds the predefined acceptance threshold of 0.70.
+**Evaluation outcome: PASS**
+
+The measured macro-F1 of 0.929 exceeds the predefined acceptance threshold of 0.70. This score is based on 16 successful model responses. Two cases returned service errors and were excluded from the finding metrics.
 
 ### 8.4 Evaluation Limitations
 
@@ -237,6 +239,8 @@ Execute the configured test command:
 npm test
 ```
 
+This runs the deterministic automated tests without making Gemini API calls.
+
 ### 9.2 Running the Harness
 
 ```bash
@@ -249,15 +253,27 @@ The harness performs:
 2. ESLint security and code-quality checks.
 3. Automated test execution.
 
-### 9.3 Evaluation Runner
+### 9.3 Running the Live Integration Test
+
+```bash
+npm run test:integration
+```
+
+This runs the live Gemini integration test, which checks whether returned findings contain verbatim source-code evidence and valid line numbers.
+
+A configured Gemini API key and network access are required. The test is separate from the standard test suite because it depends on external API availability.
+
+During the latest verification attempt, Gemini returned HTTP 503 (`UNAVAILABLE`) because the configured model was experiencing high demand. This attempt was not considered a successful integration test.
+
+### 9.4 Evaluation Runner
 
 The evaluation runner is implemented in `evals/eval-runner.js`. It compares actual model findings against expected findings in `evals/dataset.json` and calculates the evaluation metrics.
 
-### 9.4 Documented Security Exceptions
+### 9.5 Documented Security Exceptions
 
 Two narrowly scoped ESLint security rule exceptions are approved in the project constitution (v1.1.0):
 
-- `security/detect-non-literal-fs-filename`: Applied to files that read user-supplied or fixed fixture paths.
+-`security/detect-non-literal-fs-filename`: Applied to files that read user-supplied paths or known fixture paths, including `integration-tests/verbatim.test.js`.
 - `security/detect-object-injection`: Applied to a validated, bounded numeric array index in `src/schema-validator.js`.
 
 These exceptions are documented in `.specify/memory/constitution.md`. Refer to Harness Log Entry 3 for the full rationale.
