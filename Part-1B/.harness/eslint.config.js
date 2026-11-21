@@ -19,6 +19,7 @@ export default [
       "tests/property/verbatim.test.js",
       "tests/structural/dataset.test.js",
       "tests/structural/schema.test.js",
+      "integration-tests/verbatim.test.js",
     ],
     rules: {
       "security/detect-non-literal-fs-filename": "off",

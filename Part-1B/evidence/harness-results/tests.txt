@@ -2,13 +2,13 @@ PASS
 command: node --test tests/**/*.test.js
 
 --- stdout ---
-✔ category exclusions rule (FR-008) (2.653139ms)
-✔ ground-truth matching with +/- 2 line tolerance and single-match rule (FR-009) (86.765407ms)
-✔ verbatim evidence and valid line numbers rule (FR-007) (16299.605295ms)
-✔ dataset.json has exactly 18 cases in correct FR-013 distribution (1.174241ms)
-✔ evaluation runner invokes structural, property, and semantic evaluation layers (FR-012) (80.644186ms)
-✔ output schema contract exists and is valid JSON (1.123436ms)
-✔ schema validator validates report correctly (1.180031ms)
+✔ category exclusions rule (FR-008) (1.73032ms)
+✔ ground-truth matching with +/- 2 line tolerance and single-match rule (FR-009) (93.539854ms)
+✔ dataset expected finding line numbers are valid (FR-007) (1.329732ms)
+✔ dataset.json has exactly 18 cases in correct FR-013 distribution (1.230887ms)
+✔ evaluation runner invokes structural, property, and semantic evaluation layers (FR-012) (128.938827ms)
+✔ output schema contract exists and is valid JSON (2.265179ms)
+✔ schema validator validates report correctly (1.498829ms)
 ℹ tests 7
 ℹ suites 0
 ℹ pass 7
@@ -16,7 +16,7 @@ command: node --test tests/**/*.test.js
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 16851.838984
+ℹ duration_ms 679.942131
 
 --- stderr ---
 

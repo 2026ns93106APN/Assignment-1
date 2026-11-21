@@ -115,8 +115,7 @@ export async function reviewContent(content, filePath = 'input.js') {
     }
 
     return parsed;
-
-    } catch (apiErr) {
+  } catch (apiErr) {
     return {
       status: 'service_error',
       metadata: baseMetadata,

@@ -148,11 +148,11 @@ Next, I updated `.harness/eslint.config.js` with two scoped override blocks. Eac
 
 After applying the changes, I reran `npm run harness`.
 
-| Gate | First run | After amendment |
-|---|---|---|
-| Secret scan | PASS | PASS |
-| Lint + security | FAIL — 8 warnings | PASS |
-| Tests | FAIL — 5/7 passing | FAIL — 5/7 passing |
+| Gate            | First run         | After amendment   |
+|-----------------|-------------------|-------------------|
+| Secret scan     | PASS              | PASS              |
+| Lint + security | FAIL — 8 warnings | PASS              |
+| Tests           | FAIL — 5/7 passing| FAIL — 5/7 passing|
 
 The two test failures remained unchanged. Both were `ERR_MODULE_NOT_FOUND` errors for `evals/eval-runner.js`, which had not yet been implemented.
 
@@ -359,3 +359,71 @@ As a future improvement, the property tests should assert `report.status === 'su
 ### Outcome
 
 Fresh-clone verification completed, and all three harness gates passed. The limitation in the property tests was documented for future improvement rather than treated as evidence of successful live review functionality.
+
+
+## Entry 7 — Follow-up: Exclusion Test Correction
+
+**Date:** 21 November 2026
+
+**What I reviewed:**
+
+Revisited the limitation identified during fresh-clone verification in Entry 6. The original `exclusions.test.js` test depended on live Gemini review responses and could pass without confirming that a successful review had taken place.
+
+**What I changed:**
+
+Updated `tests/property/exclusions.test.js` to validate the negative-case ground truth directly from `evals/dataset.json`.
+
+The test now:
+- Loads the evaluation dataset.
+- Selects cases with the `negative` type.
+- Confirms that at least one negative case exists.
+- Verifies that each negative case has an empty `expectedFindings` array.
+
+This removes the live Gemini API dependency from the exclusion test and makes the dataset-contract check deterministic.
+
+**What remains:**
+
+`tests/property/verbatim.test.js` still depends on live Gemini review responses. It does not yet explicitly assert `report.status === 'success'` before checking the returned evidence. Therefore, the limitation identified in Entry 6 has been addressed for the exclusion test but remains for the verbatim test.
+
+**Verification:**
+
+Reran the Part 1B harness after the exclusion test change.
+
+- Secret scan: PASS
+- ESLint security checks: PASS
+- Automated tests: PASS
+
+**Outcome:**
+
+The exclusion test now validates the dataset's negative-case ground truth without requiring API credentials. The remaining limitation in the verbatim test is documented as future work. The successful harness run confirms that all three configured gates passed, but does not independently establish that live Gemini review functionality works without API credentials.
+
+
+## Entry 8 – Separation of Deterministic and Live Integration Tests
+
+**Date:** 21 November 2026
+
+### Objective
+
+Separate deterministic property tests from live Gemini API integration tests to ensure the standard test suite can run without external API availability.
+
+### Changes Made
+
+- Kept `tests/property/verbatim.test.js` as a deterministic test validating expected finding line numbers in the evaluation dataset.
+- Moved the live verbatim evidence and line-number test to `integration-tests/verbatim.test.js`.
+- Corrected relative file paths after moving the integration test.
+- Added a successful response status assertion so API failures cannot be mistaken for passing tests.
+- Kept the integration test separate from the standard `npm test` command.
+
+### Verification Results
+
+- `npm test`: PASS – 7/7 tests.
+- `npm run lint`: PASS.
+- `npm run harness`: PASS – secret scan, security lint, and tests.
+
+### Integration Test Limitation
+
+The live Gemini integration test was attempted but encountered an HTTP 503 `UNAVAILABLE` response because the configured model was experiencing high demand. This is documented as an external service availability limitation. The integration test was not considered passed.
+
+### Outcome
+
+The standard test suite and harness now run successfully without requiring Gemini API availability. Live integration verification remains separate and can be retried when the service is available.
